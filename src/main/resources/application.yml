@@ -19,6 +19,6 @@ spring:
     web-application-type: servlet
     banner-mode: 'console'
   profiles:
-#    active: gateway
-    active: zuul,ribbon
+    active: gateway
+#    active: zuul,ribbon
 #    active: zuul,hystrix
