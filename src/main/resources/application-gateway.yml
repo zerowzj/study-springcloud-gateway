@@ -4,7 +4,11 @@
 spring:
   cloud:
     gateway:
+      enabled: true
       routes:
         - id: fs
           uri: lb://fs
+          predicates:
+            - Path=/house/**
+
 
