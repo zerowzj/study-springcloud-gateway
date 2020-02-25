@@ -1,0 +1,64 @@
+#******************************
+#（★）Route
+#******************************
+zuul:
+  #（▲）忽略表达式
+  ignored-services: study-springcloud
+  ignored-headers: Cookie
+  ignored-patterns: /hello/**
+  ignore-local-service: true
+  ignore-security-headers: true
+  #（▲）全局过滤
+  sensitive-headers: Cookie,Set-Cookie,Authorization
+  #==============================
+  #（▲）网关重试开关
+  # 1.引入依赖spring-retry
+  # 2.配置ribbon参数
+  # 3.配置zuul.retryable=true
+  #==============================
+  retryable: true
+  #==============================
+  #（▲）路由配置
+  #==============================
+  routes:
+    #prefix: /api
+    #strip-prefix: true
+    study-springcloud-client-rest:
+      path: /client/rest/**
+      service-id: study-springcloud-client-rest
+      semaphore:
+        max-semaphores: 10
+  #==============================
+  #（▲）Ribbon配置
+  # 1.隔离策略
+  #（a）信号量隔离时
+  #（b）线程隔离时，可通过hystrix配置线程
+  #（c）全局配置和服务配置
+  #==============================
+  #隔离策略，可选SEMAPHORE和THREAD，默认SEMAPHORE
+  ribbon-isolation-strategy: SEMAPHORE
+  semaphore:
+    max-semaphores: 10
+  thread-pool:
+    use-separate-thread-pools: false
+    thread-pool-key-prefix: PREFIX-
+  #饥饿加载
+  ribbon:
+    eager-load:
+      enabled: true
+  #==============================
+  #（▲）Host配置
+  # 1.超时
+  #（a）以serviceId（注册中心发现或自定义）路由的服务，超时由ribbon控制
+  #（b）以url路由的服务，超时由zuul.host控制
+  #==============================
+  host:
+    #超时时间
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 5000
+    #连接数
+    max-total-connections: 200
+    max-per-route-connections: 20
+#
+#hystrix:
+#  cin
