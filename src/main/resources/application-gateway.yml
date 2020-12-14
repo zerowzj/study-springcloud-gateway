@@ -1,20 +1,30 @@
-#====================
-#（★）
-#====================
+#
 spring:
   cloud:
     gateway:
       enabled: true
+      #（▲）
       discovery:
         locator:
           enabled: true
-      #====================
-      #（▲）
-      #====================
+      #（▲）http连接
+#      httpclient:
+#        pool:
+#          max-connections: 500
+#          acquire-timeout: 15000
+#        connect-timeout: 50000
+#        response-timeout: 50000
+      #（▲）路由
       routes:
-        - id: fs
-          uri: lb://fs
+        - id: study-springcloud-provider
+          #目标服务地址；匹配路由的转发地址
+          uri: http://study-springcloud-provider
+          #路由条件
           predicates:
-            - Path=/house/**
-
-
+            - Path=/study-springcloud-provider/**
+#        - id: study-springcloud-consumer
+#            #目标服务地址；匹配路由的转发地址
+#            uri: http://study-springcloud-consumer
+#            #路由条件
+#            predicates:
+#              - Path=/study-springcloud-consumer/**

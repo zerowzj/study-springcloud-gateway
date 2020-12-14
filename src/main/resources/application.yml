@@ -10,15 +10,13 @@ eureka:
   client:
     fetch-registry: true
     service-url:
-      defaultZone: @eureka.server.list@
+      defaultZone: http://150.158.110.15:7100/
 #
 spring:
   application:
-    name: study-springcloud-zuul
+    name: study-springcloud-gateway
   main:
     web-application-type: servlet
-    banner-mode: 'console'
+    banner-mode: off
   profiles:
     active: gateway
-#    active: zuul,ribbon
-#    active: zuul,hystrix
