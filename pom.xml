@@ -14,11 +14,6 @@
         <docker.image.prefix>study</docker.image.prefix>
     </properties>
 
-<!--    <parent>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.3.3.RELEASE</version>-->
-<!--    </parent>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -32,22 +27,16 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Web -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--            &lt;!&ndash; 解决 'org.springframework.http.codec.ServerCodecConfigurer' that could not be found &ndash;&gt;-->
-<!--&lt;!&ndash;            <exclusions>&ndash;&gt;-->
-<!--&lt;!&ndash;                <exclusion>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <groupId>org.springframework</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <artifactId>spring-webmvc</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;                </exclusion>&ndash;&gt;-->
-<!--&lt;!&ndash;            </exclusions>&ndash;&gt;-->
-<!--        </dependency>-->
         <!-- Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- ============================== -->
         <!-- （★）Gateway网关               -->
@@ -66,18 +55,6 @@
 <!--                </exclusion>-->
 <!--            </exclusions>-->
         </dependency>
-       <!-- -->
-<!--        <dependency>-->
-<!--            <groupId>javax.validation</groupId>-->
-<!--            <artifactId>validation-api</artifactId>-->
-<!--            <version>2.0.1.Final</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate.validator</groupId>-->
-<!--            <artifactId>hibernate-validator</artifactId>-->
-<!--            <version>6.1.6.Final</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
