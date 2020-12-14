@@ -8,7 +8,7 @@ spring:
   application:
     name: study-springcloud-gateway
   main:
-#    web-application-type: servlet
+    web-application-type: reactive
     banner-mode: off
   profiles:
     active: gateway
