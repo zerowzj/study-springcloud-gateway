@@ -14,11 +14,11 @@
         <docker.image.prefix>study</docker.image.prefix>
     </properties>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
-    </parent>
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>2.3.3.RELEASE</version>-->
+<!--    </parent>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -33,16 +33,17 @@
 
     <dependencies>
         <!-- Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-webmvc</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--            &lt;!&ndash; 解决 'org.springframework.http.codec.ServerCodecConfigurer' that could not be found &ndash;&gt;-->
+<!--&lt;!&ndash;            <exclusions>&ndash;&gt;-->
+<!--&lt;!&ndash;                <exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <groupId>org.springframework</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <artifactId>spring-webmvc</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                </exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;            </exclusions>&ndash;&gt;-->
+<!--        </dependency>-->
         <!-- Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -59,10 +60,10 @@
 <!--                    <groupId>org.springframework.boot</groupId>-->
 <!--                    <artifactId>spring-boot-starter-web</artifactId>-->
 <!--                </exclusion>-->
-<!--                &lt;!&ndash;                <exclusion>&ndash;&gt;-->
-<!--                &lt;!&ndash;                    <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-<!--                &lt;!&ndash;                    <artifactId>spring-boot-starter-webflux</artifactId>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </exclusion>&ndash;&gt;-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-webflux</artifactId>-->
+<!--                </exclusion>-->
 <!--            </exclusions>-->
         </dependency>
 
@@ -75,6 +76,12 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.0</version>
         </dependency>
 
         <dependency>

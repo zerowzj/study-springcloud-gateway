@@ -4,19 +4,23 @@ server:
 logging:
   config: classpath:logback.xml
 #
-eureka:
-  instance:
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-  client:
-    fetch-registry: true
-    service-url:
-      defaultZone: http://150.158.110.15:7100/
-#
 spring:
   application:
     name: study-springcloud-gateway
   main:
-    web-application-type: servlet
+#    web-application-type: servlet
     banner-mode: off
   profiles:
     active: gateway
+#
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://150.158.110.15:7100/eureka
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true

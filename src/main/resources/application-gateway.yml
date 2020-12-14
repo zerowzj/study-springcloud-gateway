@@ -18,10 +18,12 @@ spring:
       routes:
         - id: study-springcloud-provider
           #目标服务地址；匹配路由的转发地址
-          uri: http://study-springcloud-provider
+          uri: lb://study-springcloud-provider
           #路由条件
           predicates:
             - Path=/study-springcloud-provider/**
+          filters:
+            - StripPrefix=1
 #        - id: study-springcloud-consumer
 #            #目标服务地址；匹配路由的转发地址
 #            uri: http://study-springcloud-consumer
