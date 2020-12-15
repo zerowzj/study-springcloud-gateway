@@ -1,4 +1,4 @@
-package study.springcloud.gateway.filter;
+package study.springcloud.gateway.auth;
 
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
