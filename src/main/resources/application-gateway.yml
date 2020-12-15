@@ -24,9 +24,16 @@ spring:
             - Path=/study-springcloud-provider/**
           filters:
             - StripPrefix=1
-        - id: study-springcloud-consumer
-            #目标服务地址；匹配路由的转发地址
-            uri: http://study-springcloud-consumer
-            #路由条件
-            predicates:
-              - Path=/study-springcloud-consumer/**
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/defaultfallback
+#
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 3000
