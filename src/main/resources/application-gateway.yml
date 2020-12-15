@@ -10,9 +10,15 @@ spring:
       #（▲）http连接
       httpclient:
         pool:
+          #Only for type FIXED
           max-connections: 5000
+          #Only for type FIXED
           acquire-timeout: 5000
+          max-idle-time: 1000
+          max-life-time: 1000
+        #连接超时
         connect-timeout: 5000
+        #读取超时
         response-timeout: 5000
       #（▲）路由
       routes:
@@ -37,4 +43,12 @@ spring:
 #          strategy: SEMAPHORE
 #          thread:
 #            timeoutInMilliseconds: 3000
+#      fallback:
+#        enabled: fasle
 #      circuitBreaker:
+#        enabled: true
+#        requestVolumeThreshold: 11
+#        sleepWindowInMilliseconds: 123
+#        errorThresholdPercentage: 1231
+#        forceOpen: true
+#        forceClosed: true
