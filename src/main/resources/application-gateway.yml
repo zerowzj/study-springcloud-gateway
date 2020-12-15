@@ -7,6 +7,7 @@ spring:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
       #（★）http连接
       httpclient:
         pool:
@@ -19,6 +20,13 @@ spring:
         #连接和读取超时
         connect-timeout: 5000
         response-timeout: 5000
+      #（★）全局过滤器
+      default-filters:
+        - StripPrefix=1
+#        - name: Hystrix
+#          args:
+#            name: default1
+#            fallbackUri: forward:/defaultFallback
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -28,19 +36,19 @@ spring:
           predicates:
             - Path=/study-springcloud-provider/**
           #过滤规则
-          filters:
-            - StripPrefix=1
-            #（▲）熔断
-            - name: Hystrix
-              args:
-                name: default
-                fallbackUri: forward:/defaultFallback
+#          filters:
+#            - StripPrefix=1
+#            #（▲）熔断
+#            - name: Hystrix
+#              args:
+#                name: default
+#                fallbackUri: forward:/defaultFallback
             #（▲）限流
-            - name: RequestRateLimiter
-              args:
-                #
-                key-resolver: '#{@remoteAddrKeyResolver}'
-                #每秒最大访问次数
-                redis-rate-limiter.replenishRate: 20
-                #令牌桶最大容量
-                redis-rate-limiter.burstCapacity: 20
+#            - name: RequestRateLimiter
+#              args:
+#                #
+#                key-resolver: '#{@remoteAddrKeyResolver}'
+#                #每秒最大访问次数
+#                redis-rate-limiter.replenishRate: 20
+#                #令牌桶最大容量
+#                redis-rate-limiter.burstCapacity: 20

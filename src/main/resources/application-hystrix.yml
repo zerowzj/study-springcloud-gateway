@@ -1,5 +1,10 @@
 #
 hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maxQueueSize: -1
+      queueSizeRejectionThreshold: 1000
   command:
     default:
       #（★）HystrixCommand如何去执行
@@ -30,12 +35,12 @@ hystrix:
       circuitBreaker:
         #是否开启熔断器，默认为true
         enabled: true
-#        #在一定的窗口时间内，打开熔断器的最小请求数
-#        requestVolumeThreshold: 11
-#        #
-#        sleepWindowInMilliseconds: 123
-#        #窗口时间内多少百分比的请求失败会打开熔断器，默认是50，也就是超过50%的失败了才会打开
-#        errorThresholdPercentage: 50
+        #在滚动时间窗中，断路器熔断的最小请求数
+        requestVolumeThreshold: 11
+        #
+        sleepWindowInMilliseconds: 123
+        #窗口时间内多少百分比的请求失败会打开熔断器，默认是50，也就是超过50%的失败了才会打开
+        errorThresholdPercentage: 50
         #断路器将强制进入“打开”状态，它会拒绝所有请求
         forceOpen: true
         #
