@@ -11,8 +11,8 @@ spring:
     web-application-type: reactive
     banner-mode: off
   profiles:
-    active: gateway
-#    active: gateway, hystrix
+#    active: gateway
+    active: gateway, hystrix
 #
 eureka:
   instance:
