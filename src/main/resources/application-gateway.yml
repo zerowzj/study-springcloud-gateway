@@ -18,7 +18,7 @@ spring:
           max-life-time: 1000
         #连接和读取超时
         connect-timeout: 5000
-        response-timeout: 10000
+        response-timeout: 5000
       #（▲）路由
       routes:
         - id: study-springcloud-provider
@@ -31,48 +31,16 @@ spring:
           filters:
             - StripPrefix=1
             #熔断
-            #            - name: Hystrix
-            #              args:
-            #                name: default
-            #                fallbackUri: forward:/defaultFallback
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: forward:/defaultFallback
             #限流
-#            - name: RequestRateLimiter
-#              args:
-
-#
-#hystrix:
-  command:
-    default:
-      #（▲）HystrixCommand如何去执行
-      execution:
-        #超时
-        timeout:
-          enabed: true
-        #隔离
-        isolation:
-          #THREAD/SEMAPHORE
-          strategy: SEMAPHORE
-          #线程
-          thread:
-            timeoutInMilliseconds: 3000
-            interruptOnTimeout: 1
-            interruptOnCancel: 123
-          #信号量
-          semaphore:
-            maxConcurrentRequests: 12
-      #（▲）回退
-      fallback:
-        enabled: false
-      #（▲）熔断器
-      circuitBreaker:
-        #是否开启熔断器，默认为true
-        enabled: true
-        #在一定的窗口时间内，打开熔断器的最小请求数
-        requestVolumeThreshold: 11
-        #
-        sleepWindowInMilliseconds: 123
-        #窗口时间内多少百分比的请求失败会打开熔断器，默认是50，也就是超过50%的失败了才会打开
-        errorThresholdPercentage: 50
-        #是否强制开启或强制关闭，默认是false
-        forceOpen: true
-        forceClosed: true
+            - name: RequestRateLimiter
+              args:
+                #
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                #每秒最大访问次数
+                redis-rate-limiter.replenishRate: 20
+                #令牌桶最大容量
+                redis-rate-limiter.burstCapacity: 20

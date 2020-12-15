@@ -12,7 +12,8 @@ import java.util.Map;
 public class FallbackController {
 
     @RequestMapping("/defaultFallback")
-    public Map<String, String> defaultFallback() {
+    public Map<String, String> defaultFallback(Exception ex) {
+        ex.printStackTrace();
         log.info(">>>>>> 服务降级");
         Map<String, String> result = Maps.newHashMap();
         result.put("code", "9999");
