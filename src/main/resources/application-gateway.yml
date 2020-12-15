@@ -3,11 +3,11 @@ spring:
   cloud:
     gateway:
       enabled: true
-      #（▲）
+      #（★）
       discovery:
         locator:
           enabled: true
-      #（▲）http连接
+      #（★）http连接
       httpclient:
         pool:
           #Only for type FIXED
@@ -19,7 +19,7 @@ spring:
         #连接和读取超时
         connect-timeout: 5000
         response-timeout: 5000
-      #（▲）路由
+      #（★）路由
       routes:
         - id: study-springcloud-provider
           #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
@@ -30,12 +30,12 @@ spring:
           #过滤规则
           filters:
             - StripPrefix=1
-            #熔断
+            #（▲）熔断
             - name: Hystrix
               args:
                 name: default
                 fallbackUri: forward:/defaultFallback
-            #限流
+            #（▲）限流
             - name: RequestRateLimiter
               args:
                 #
