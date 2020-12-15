@@ -27,7 +27,7 @@ hystrix:
           #（▲）信号量
           semaphore:
             #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
-            maxConcurrentRequests: 12
+            maxConcurrentRequests: 100
       #（★）回退降级
       fallback:
         enabled: true
