@@ -14,10 +14,9 @@ public class FallbackController {
     @RequestMapping("/defaultFallback")
     public Map<String, String> defaultFallback() {
         log.info(">>>>>> 服务降级");
-        Map<String, String> map = Maps.newHashMap();
-        map.put("code", "fail");
-        map.put("desc", "服务异常");
-        map.put("data", "");
-        return map;
+        Map<String, String> result = Maps.newHashMap();
+        result.put("code", "9999");
+        result.put("desc", "服务异常");
+        return result;
     }
 }

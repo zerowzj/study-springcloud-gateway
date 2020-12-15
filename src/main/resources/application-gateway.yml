@@ -23,11 +23,12 @@ spring:
       #（▲）路由
       routes:
         - id: study-springcloud-provider
-          #目标服务地址
+          #服务地址
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
             - Path=/study-springcloud-provider/**
+          #过滤器
           filters:
             - StripPrefix=1
             - name: Hystrix
@@ -35,20 +36,33 @@ spring:
                 name: default
                 fallbackUri: forward:/defaultFallback
 #
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          strategy: SEMAPHORE
-#          thread:
-#            timeoutInMilliseconds: 3000
-#      fallback:
-#        enabled: fasle
-#      circuitBreaker:
-#        enabled: true
-#        requestVolumeThreshold: 11
-#        sleepWindowInMilliseconds: 123
-#        errorThresholdPercentage: 1231
-#        forceOpen: true
-#        forceClosed: true
+hystrix:
+  command:
+    default:
+      #（▲）HystrixCommand如何去执行
+      execution:
+        #超时
+        timeout:
+          enabed: true
+        #隔离（THREAD/SEMAPHORE）
+        isolation:
+          strategy: SEMAPHORE
+          #线程
+          thread:
+            timeoutInMilliseconds: 3000
+            interruptOnTimeout: 1
+            interruptOnCancel: 123
+          #信号量
+          semaphore:
+            maxConcurrentRequests: 12
+      #（▲）回退
+      fallback:
+        enabled: false
+      #（▲）熔断器
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 11
+        sleepWindowInMilliseconds: 123
+        errorThresholdPercentage: 1231
+        forceOpen: true
+        forceClosed: true
