@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-@Order(-1000)
+@Order(0)
 public class WatchDogFilter implements GlobalFilter {
 
     @Override
