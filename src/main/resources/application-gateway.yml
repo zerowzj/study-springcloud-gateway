@@ -12,19 +12,17 @@ spring:
         pool:
           #Only for type FIXED
           max-connections: 5000
-          #Only for type FIXED
           acquire-timeout: 5000
+          #
           max-idle-time: 1000
           max-life-time: 1000
-        #连接超时
+        #连接和读取超时
         connect-timeout: 5000
-        #读取超时
-        response-timeout: 5000
+        response-timeout: 10000
       #（▲）路由
       routes:
-        #路由 ID，保持唯一
         - id: study-springcloud-provider
-          #目标服务地址
+          #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
@@ -32,12 +30,17 @@ spring:
           #过滤规则
           filters:
             - StripPrefix=1
-            - name: Hystrix
-              args:
-                name: default
-                fallbackUri: forward:/defaultFallback
+            #熔断
+            #            - name: Hystrix
+            #              args:
+            #                name: default
+            #                fallbackUri: forward:/defaultFallback
+            #限流
+#            - name: RequestRateLimiter
+#              args:
+
 #
-hystrix:
+#hystrix:
   command:
     default:
       #（▲）HystrixCommand如何去执行
@@ -66,6 +69,7 @@ hystrix:
         enabled: true
         #在一定的窗口时间内，打开熔断器的最小请求数
         requestVolumeThreshold: 11
+        #
         sleepWindowInMilliseconds: 123
         #窗口时间内多少百分比的请求失败会打开熔断器，默认是50，也就是超过50%的失败了才会打开
         errorThresholdPercentage: 50
