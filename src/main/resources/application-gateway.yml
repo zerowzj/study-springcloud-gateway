@@ -2,7 +2,7 @@
 spring:
   redis:
     host: 150.158.110.15
-    port: 7379
+    port: 737
     database: 0
 #    password: abc123
   cloud:
@@ -29,10 +29,10 @@ spring:
       default-filters:
         - StripPrefix=1
         #HystrxGatewayFilterFactroy
-        - name: Hystrix
-          args:
-            name: default
-            #fallbackUri: forward:/defaultFallback
+#        - name: Hystrix
+#          args:
+#            name: default
+#            #fallbackUri: forward:/defaultFallback
         - name: RequestRateLimiter
           args:
             #使用SpEL表达式从Spring容器中获取Bean对象
@@ -50,13 +50,13 @@ spring:
           predicates:
             - Path=/study-springcloud-provider/**
           #过滤规则
-          filters:
-            #（▲）限流
-            - name: RequestRateLimiter
-              args:
-                #使用SpEL表达式从Spring容器中获取Bean对象
-                key-resolver: '#{@uriKeyResolver}'
-                #每秒最大访问次数；令牌桶每秒填充平均速率
-                redis-rate-limiter.replenishRate: 1
-                #令牌桶最大容量；令牌桶上线
-                redis-rate-limiter.burstCapacity: 2
+#          filters:
+#            #（▲）限流
+#            - name: RequestRateLimiter
+#              args:
+#                #使用SpEL表达式从Spring容器中获取Bean对象
+#                key-resolver: '#{@uriKeyResolver}'
+#                #每秒最大访问次数；令牌桶每秒填充平均速率
+#                redis-rate-limiter.replenishRate: 1
+#                #令牌桶最大容量；令牌桶上线
+#                redis-rate-limiter.burstCapacity: 2
