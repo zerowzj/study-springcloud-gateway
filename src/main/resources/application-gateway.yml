@@ -22,13 +22,14 @@ spring:
         response-timeout: 5000
       #（▲）路由
       routes:
+        #路由 ID，保持唯一
         - id: study-springcloud-provider
-          #服务地址
+          #目标服务地址
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
             - Path=/study-springcloud-provider/**
-          #过滤器
+          #过滤规则
           filters:
             - StripPrefix=1
             - name: Hystrix
