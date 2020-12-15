@@ -2,7 +2,7 @@
 spring:
   redis:
     host: 150.158.110.15
-    port: 737
+    port: 7379
     database: 0
 #    password: abc123
   cloud:
@@ -29,10 +29,10 @@ spring:
       default-filters:
         - StripPrefix=1
         #HystrxGatewayFilterFactroy
-#        - name: Hystrix
-#          args:
-#            name: default
-#            #fallbackUri: forward:/defaultFallback
+        - name: Hystrix
+          args:
+            name: default
+            #fallbackUri: forward:/defaultFallback
         - name: RequestRateLimiter
           args:
             #使用SpEL表达式从Spring容器中获取Bean对象
