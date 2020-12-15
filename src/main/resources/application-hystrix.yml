@@ -23,19 +23,20 @@ hystrix:
           semaphore:
             #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
             maxConcurrentRequests: 12
-      #（▲★）回退
+      #（★）回退降级
       fallback:
         enabled: true
-      #（▲★）熔断器
-#      circuitBreaker:
-#        #是否开启熔断器，默认为true
-#        enabled: true
+      #（★）熔断器
+      circuitBreaker:
+        #是否开启熔断器，默认为true
+        enabled: true
 #        #在一定的窗口时间内，打开熔断器的最小请求数
 #        requestVolumeThreshold: 11
 #        #
 #        sleepWindowInMilliseconds: 123
 #        #窗口时间内多少百分比的请求失败会打开熔断器，默认是50，也就是超过50%的失败了才会打开
 #        errorThresholdPercentage: 50
-#        #是否强制开启或强制关闭，默认是false
-#        forceOpen: true
-#        forceClosed: true
+        #断路器将强制进入“打开”状态，它会拒绝所有请求
+        forceOpen: true
+        #
+        forceClosed: true
