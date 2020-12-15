@@ -44,7 +44,7 @@
             </exclusions>
         </dependency>
         <!-- ============================== -->
-        <!-- （★）Gateway网关               -->
+        <!-- （★）SpringCloud Gateway      -->
         <!-- ============================== -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -65,6 +65,17 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.10.0</version>
         </dependency>
+        <!-- ============================== -->
+        <!--（★）Hystrix                   -->
+        <!-- ============================== -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!-- ============================== -->
+        <!--（★）限流                       -->
+        <!-- ============================== -->
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>

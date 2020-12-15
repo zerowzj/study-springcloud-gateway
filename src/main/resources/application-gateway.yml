@@ -10,14 +10,14 @@ spring:
       #（▲）http连接
       httpclient:
         pool:
-          max-connections: 500
-          acquire-timeout: 15000
-        connect-timeout: 50000
-        response-timeout: 50000
+          max-connections: 5000
+          acquire-timeout: 5000
+        connect-timeout: 5000
+        response-timeout: 5000
       #（▲）路由
       routes:
         - id: study-springcloud-provider
-          #目标服务地址；匹配路由的转发地址
+          #目标服务地址
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
@@ -26,14 +26,15 @@ spring:
             - StripPrefix=1
             - name: Hystrix
               args:
-                name: fallbackcmd
-                fallbackUri: forward:/defaultfallback
+                name: default
+                fallbackUri: forward:/defaultFallback
 #
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 3000
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: SEMAPHORE
+#          thread:
+#            timeoutInMilliseconds: 3000
+#      circuitBreaker:
