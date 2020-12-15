@@ -23,10 +23,11 @@ spring:
       #（★）全局过滤器
       default-filters:
         - StripPrefix=1
+        #HystrxGatewayFilterFactroy
         - name: Hystrix
           args:
             name: default
-            fallbackUri: forward:/defaultFallback
+            #fallbackUri: forward:/defaultFallback
       #（★）路由
       routes:
         - id: study-springcloud-provider
