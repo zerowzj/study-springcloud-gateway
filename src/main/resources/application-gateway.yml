@@ -37,7 +37,7 @@ spring:
           args:
             #使用SpEL按照名称引用Bean
             key-resolver: '#{@uriKeyResolver}'
-            #每秒最大访问次数；令牌桶每秒填充平均速率；允许用户每秒处理多少个请求
+            #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
             redis-rate-limiter.replenishRate: 5
             #令牌桶最大容量，允许1秒内完成的最大请求数
             redis-rate-limiter.burstCapacity: 5
