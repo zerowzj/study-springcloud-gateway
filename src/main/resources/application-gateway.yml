@@ -21,8 +21,9 @@ spring:
           #fixed类型可用
           max-connections: 5000
           acquire-timeout: 5000
-          #
+          #最大空闲时间
           max-idle-time: 1000
+          #最大生命周期
           max-life-time: 1000
         #连接和读取超时
         connect-timeout: 5000
@@ -31,18 +32,19 @@ spring:
       default-filters:
         - StripPrefix=1
         #HystrxGatewayFilterFactroy
-#        - name: Hystrix
+        #        - name: Hystrix
+        #          args:
+        #            name: default
+        #fallbackUri: forward:/defaultFallback
+        #全局限流，RequestRateLimiterGatewayFilterFactory,RedisRateLimiter
+#        - name: RequestRateLimiter
 #          args:
-#            name: default
-            #fallbackUri: forward:/defaultFallback
-        - name: RequestRateLimiter
-          args:
-            #使用SpEL按照名称引用Bean
-            key-resolver: '#{@uriKeyResolver}'
-            #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
-            redis-rate-limiter.replenishRate: 5
-            #令牌桶最大容量，允许1秒内完成的最大请求数
-            redis-rate-limiter.burstCapacity: 5
+#            #使用SpEL按照名称引用Bean
+#            key-resolver: '#{@uriKeyResolver}'
+#            #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
+#            redis-rate-limiter.replenishRate: 1
+#            #令牌桶最大容量，允许1秒内完成的最大请求数
+#            redis-rate-limiter.burstCapacity: 1
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -50,15 +52,12 @@ spring:
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
-            - Path=/study-springcloud-provider/**
-          #过滤规则
-#          filters:
-#            #（▲）限流
-#            - name: RequestRateLimiter
-#              args:
-#                #使用SpEL表达式从Spring容器中获取Bean对象
-#                key-resolver: '#{@uriKeyResolver}'
-#                #每秒最大访问次数；令牌桶每秒填充平均速率
-#                redis-rate-limiter.replenishRate: 1
-#                #令牌桶最大容量；令牌桶上线
-#                redis-rate-limiter.burstCapacity: 2
+            - Path=/springcloud-provider/**
+          #过滤器
+          filters:
+            #局部限流，uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@uriKeyResolver}'
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1

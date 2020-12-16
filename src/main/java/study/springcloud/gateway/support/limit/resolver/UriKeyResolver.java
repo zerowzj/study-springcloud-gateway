@@ -15,7 +15,7 @@ public class UriKeyResolver implements KeyResolver {
     public Mono<String> resolve(ServerWebExchange exchange) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
-        log.info(">>>>>>> {}", path);
+        log.info(">>>>>> rate_limit url: {}", path);
 
         return Mono.just(path);
     }
