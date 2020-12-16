@@ -8,7 +8,7 @@ spring:
     #
     gateway:
       enabled: true
-      #（★）
+      #（★）注册发现
       discovery:
         locator:
           enabled: true
@@ -35,11 +35,11 @@ spring:
             #fallbackUri: forward:/defaultFallback
         - name: RequestRateLimiter
           args:
-            #使用SpEL表达式从Spring容器中获取Bean对象
+            #使用SpEL按照名称引用Bean
             key-resolver: '#{@uriKeyResolver}'
-            #每秒最大访问次数；令牌桶每秒填充平均速率
+            #每秒最大访问次数；令牌桶每秒填充平均速率；允许用户每秒处理多少个请求
             redis-rate-limiter.replenishRate: 5
-            #令牌桶最大容量；令牌桶上线
+            #令牌桶最大容量，允许1秒内完成的最大请求数
             redis-rate-limiter.burstCapacity: 5
       #（★）路由
       routes:

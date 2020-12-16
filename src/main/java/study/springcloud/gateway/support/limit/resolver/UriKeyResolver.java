@@ -1,7 +1,8 @@
-package study.springcloud.gateway.support.limiter;
+package study.springcloud.gateway.support.limit.resolver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;

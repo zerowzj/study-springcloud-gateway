@@ -1,4 +1,4 @@
-package study.springcloud.gateway.support.limiter;
+package study.springcloud.gateway.support.limit.resolver;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.web.server.ServerWebExchange;
