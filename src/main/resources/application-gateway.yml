@@ -58,6 +58,6 @@ spring:
             #局部限流，uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
             - name: RequestRateLimiter
               args:
-                key-resolver: '#{@uriKeyResolver}'
+                key-resolver: '#{@hostAddrKeyResolver}'
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 1
