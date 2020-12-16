@@ -79,6 +79,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
+        <!-- bucket4j -->
+        <dependency>
+            <groupId>com.github.vladimir-bukhtoyarov</groupId>
+            <artifactId>bucket4j-core</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+        <!-- ratelimitj -->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-core</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
