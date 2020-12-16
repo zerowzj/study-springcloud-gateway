@@ -16,7 +16,8 @@ spring:
       #（★）http连接
       httpclient:
         pool:
-          #Only for type FIXED
+          type: elastic
+          #fixed类型可用
           max-connections: 5000
           acquire-timeout: 5000
           #

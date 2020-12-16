@@ -17,6 +17,7 @@ public class UriKeyResolver implements KeyResolver {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
         log.info(">>>>>>> {}", path);
+
         return Mono.just(path);
     }
 }
