@@ -16,6 +16,7 @@ spring:
       #（★）http连接
       httpclient:
         pool:
+          #elastic/fixed/disabled
           type: elastic
           #fixed类型可用
           max-connections: 5000
