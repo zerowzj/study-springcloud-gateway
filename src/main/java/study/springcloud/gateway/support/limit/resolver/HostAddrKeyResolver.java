@@ -17,7 +17,6 @@ public class HostAddrKeyResolver implements KeyResolver {
         String hostName =  request.getRemoteAddress().getHostName();
         log.info(">>>>>> rate_limit host_name: {}", hostName);
 
-
         return Mono.just(hostName);
     }
 }

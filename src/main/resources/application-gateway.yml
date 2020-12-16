@@ -36,15 +36,6 @@ spring:
         #          args:
         #            name: default
         #fallbackUri: forward:/defaultFallback
-        #全局限流，RequestRateLimiterGatewayFilterFactory,RedisRateLimiter
-#        - name: RequestRateLimiter
-#          args:
-#            #使用SpEL按照名称引用Bean
-#            key-resolver: '#{@uriKeyResolver}'
-#            #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
-#            redis-rate-limiter.replenishRate: 1
-#            #令牌桶最大容量，允许1秒内完成的最大请求数
-#            redis-rate-limiter.burstCapacity: 1
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -55,9 +46,13 @@ spring:
             - Path=/springcloud-provider/**
           #过滤器
           filters:
-            #局部限流，uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
+            #uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
+            #RequestRateLimiterGatewayFilterFactory,RedisRateLimiter
             - name: RequestRateLimiter
               args:
-                key-resolver: '#{@hostAddrKeyResolver}'
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 1
+                #使用SpEL按照名称引用Bean
+                key-resolver: '#{@uriKeyResolver}'
+                #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 100
+                #令牌桶最大容量，允许1秒内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 100
