@@ -29,9 +29,9 @@ spring:
       default-filters:
         - StripPrefix=1
         #HystrxGatewayFilterFactroy
-        - name: Hystrix
-          args:
-            name: default
+#        - name: Hystrix
+#          args:
+#            name: default
             #fallbackUri: forward:/defaultFallback
         - name: RequestRateLimiter
           args:
