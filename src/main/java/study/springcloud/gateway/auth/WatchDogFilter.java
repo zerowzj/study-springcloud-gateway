@@ -9,19 +9,23 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import study.springcloud.gateway.support.utils.Exchanges;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-@Order(0)
+@Order(-Integer.MAX_VALUE)
 public class WatchDogFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        String path = request.getURI().getPath();
 
+        log.info("{}", Exchanges.getGatewayRequestUrl(exchange));
+        log.info("{}", Exchanges.getGatewayRoute(exchange));
+
+        String path = request.getURI().getPath();
         Stopwatch stopwatch = Stopwatch.createStarted();
         Mono<Void> mono;
         try {
