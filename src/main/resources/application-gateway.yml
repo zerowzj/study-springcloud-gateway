@@ -51,15 +51,16 @@ spring:
           filters:
             #uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
             #RequestRateLimiterGatewayFilterFactory, RedisRateLimiter
-            #
             - name: RequestRateLimiter
               args:
                 #使用SpEL按照名称引用Bean
                 key-resolver: '#{@uriKeyResolver}'
                 redis-rate-limiter:
+                  #每次补充令牌数量
                   #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
-                  replenishRate: 5
+                  replenishRate: 1
+                  #令牌桶最大容量，突发请求数量
                   #令牌桶最大容量，允许1秒内完成的最大请求数
-                  burstCapacity: 5
+                  burstCapacity: 60
                   #每次请求消耗令牌的数量
-                  requestedTokens: 100
+                  requestedTokens: 6
