@@ -1,29 +1,21 @@
-package study.springcloud.gateway.support.limit.bucket4j;
+package study.springcloud.gateway.support.limiter.guava;
 
-import io.github.bucket4j.Bucket;
+import com.google.common.util.concurrent.RateLimiter;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-/**
- * Bucket4j 是一个基于令牌桶算法实现的强大的限流库，
- * 它不仅支持单机限流，还支持通过诸如 Hazelcast、Ignite、Coherence、Infinispan 或其他兼容 JCache API (JSR 107) 规范的分布式缓存实现分布式限流
- */
 @Component
-public class RateLimitByPathFilter implements GatewayFilter {
+public class RateLimitByCpuFilter implements GatewayFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        String path = request.getURI().getPath();
-
-        Bucket bucket = null;
-        if (bucket.tryConsume(1)) {
+        RateLimiter limiter = RateLimiter.create(5);
+        if (limiter.acquire() != 0) {
             return chain.filter(exchange);
         } else {
             ServerHttpResponse response = exchange.getResponse();
