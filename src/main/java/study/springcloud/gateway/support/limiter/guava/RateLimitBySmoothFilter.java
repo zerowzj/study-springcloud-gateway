@@ -13,7 +13,8 @@ import reactor.core.publisher.Mono;
 public class RateLimitBySmoothFilter implements GatewayFilter {
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange,
+                             GatewayFilterChain chain) {
         RateLimiter limiter = RateLimiter.create(5);
         if (limiter.acquire() != 0) {
             return chain.filter(exchange);
