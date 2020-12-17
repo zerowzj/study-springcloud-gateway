@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+/**
+ * Bucket4j 是一个基于令牌桶算法实现的强大的限流库，
+ * 它不仅支持单机限流，还支持通过诸如 Hazelcast、Ignite、Coherence、Infinispan 或其他兼容 JCache API (JSR 107) 规范的分布式缓存实现分布式限流
+ */
 @Component
 public class RateLimitByPathFilter implements GatewayFilter {
 
