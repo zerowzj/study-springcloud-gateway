@@ -22,14 +22,16 @@ spring:
             - StripPrefix=1
 #
 hystrix:
+  #
   threadpool:
     default:
       coreSize: 10
       maxQueueSize: -1
       queueSizeRejectionThreshold: 1000
+  #
   command:
     default:
-      #（★）HystrixCommand如何去执行
+      #（★）HystrixCommand如何执行
       execution:
         #（▲）HystrixCommand.run()的执行是否启用超时时间
         timeout:
@@ -53,17 +55,17 @@ hystrix:
       #（★）回退降级
       fallback:
         enabled: true
-      #（★）熔断器
-#      circuitBreaker:
-#        #是否开启熔断器，默认为true
-#        enabled: true
-#        #断路器将强制进入“打开”状态，它会拒绝所有请求
-#        forceOpen: true
-#        #
-#        forceClosed: true
-#        #窗口时间内，断路器熔断的最小请求数
-#        requestVolumeThreshold: 20
-#        #
-#        sleepWindowInMilliseconds: 6000
-#        #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
-#        errorThresholdPercentage: 10
+      #（★）断路器
+      circuitBreaker:
+        #是否开启熔断器，默认为true
+        enabled: true
+        #断路器将强制进入“打开”状态，它会拒绝所有请求
+        forceOpen: true
+        #
+        forceClosed: true
+        #窗口时间内，断路器熔断的最小请求数
+        requestVolumeThreshold: 20
+        #
+        sleepWindowInMilliseconds: 6000
+        #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
+        errorThresholdPercentage: 10

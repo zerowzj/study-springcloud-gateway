@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import study.springcloud.gateway.support.utils.Exchanges;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
+@Order(-100)
 public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<CustomGatewayFilterFactory.Config> {
 
     public CustomGatewayFilterFactory(){
