@@ -63,9 +63,9 @@ hystrix:
         forceOpen: true
         #
         forceClosed: true
+        #窗口时间
+        sleepWindowInMilliseconds: 6000
         #窗口时间内，断路器熔断的最小请求数
         requestVolumeThreshold: 20
-        #
-        sleepWindowInMilliseconds: 6000
         #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
         errorThresholdPercentage: 10
