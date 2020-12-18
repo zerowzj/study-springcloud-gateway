@@ -28,7 +28,7 @@ hystrix:
   threadpool:
     default:
       #该参数用来设置执行命令线程池的核心线程数，默认为10，该值也是命令执行的最大并发量
-      coreSize: 10
+      coreSize: 0
       #该参数用来设置执行命令线程池的最大线程数，默认为10
       maximumSize: 10
       #该参数用来设置线程池的最大队列大小。默认-1，使用SynchronousQueue；其他值则使用 LinkedBlockingQueue。
@@ -54,7 +54,7 @@ hystrix:
         #（▲）隔离
         isolation:
           #HystrixCommand.run()执行的隔离策略，THREAD/SEMAPHORE
-          strategy: THREAD
+          strategy: SEMAPHORE
           #（▲）线程
           thread:
             #HystrixCommand执行的超时时间
