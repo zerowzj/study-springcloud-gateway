@@ -7,21 +7,17 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      #（★）全局过滤器
       default-filters:
-        #HystrxGatewayFilterFactroy
-        #        - name: Hystrix
-        #          args:
-        #            name: default
-        #fallbackUri: forward:/defaultFallback
-      #（★）路由
+        #（★）HystrxGatewayFilterFactroy
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: forward:/defaultFallback
       routes:
         - id: study-springcloud-provider
           uri: lb://study-springcloud-provider
-          #路由条件
           predicates:
             - Path=/springcloud-provider/**
-          #过滤器
           filters:
             - StripPrefix=1
 #
