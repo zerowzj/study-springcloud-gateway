@@ -55,7 +55,9 @@ hystrix:
         isolation:
           #HystrixCommand.run()执行的隔离策略，THREAD/SEMAPHORE
           strategy: SEMAPHORE
-          #（▲）线程
+          semaphore:
+            #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
+            maxConcurrentRequests: 10
           thread:
             #HystrixCommand执行的超时时间
             timeoutInMilliseconds: 3000
@@ -63,17 +65,13 @@ hystrix:
             interruptOnTimeout: true
             #当HystrixCommand.run()执行取消时是否要它中断
             interruptOnCancel: true
-          #（▲）信号量
-          semaphore:
-            #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
-            maxConcurrentRequests: 10
       #（★）回退降级
       fallback:
         enabled: false
-#      #（★）断路器
-#      circuitBreaker:
-#        #是否开启熔断器，默认为true
-#        enabled: true
+      #（★）断路器
+      circuitBreaker:
+        #是否开启熔断器，默认为true
+        enabled: false
 #        #断路器将强制进入“打开”状态，它会拒绝所有请求
 #        forceOpen: true
 #        #
