@@ -8,10 +8,12 @@ spring:
           enabled: true
           lower-case-service-id: true
       default-filters:
-        #（★）HystrxGatewayFilterFactroy
+        #（★）HystrixGatewayFilterFactory
         - name: Hystrix
           args:
+            #指定了hystrix command的名称
             name: default
+            #
             fallbackUri: forward:/defaultFallback
       routes:
         - id: study-springcloud-provider
@@ -22,18 +24,24 @@ spring:
             - StripPrefix=1
 #
 hystrix:
-  #
+  #Hystrix命令所属线程池的配置
   threadpool:
     default:
-      #核心线程数
-      coreSize: 10
+      #该参数用来设置执行命令线程池的核心线程数，该值也是命令执行的最大并发量
+      coreSize: 15
       #最大排队长度。默认-1，使用SynchronousQueue。
       #其他值则使用 LinkedBlockingQueue。
       #如果要从-1换成其他值则需重启，即该值不能动态调整，若要动态调整，需要使用到下边这个配置
       maxQueueSize: -1
-      #
+      #该参数用来为队列设置拒绝阈值。通过该参数，即使队列没有达到最大值也能拒绝请求
       queueSizeRejectionThreshold: 1000
-  #
+      metrics:
+        rollingStats:
+          #该参数用来设置滚动时间窗的长度，单位为毫秒
+          timeInMilliseconds: 100
+          #设置滚动时间窗划分成桶的数量
+          numBuckets: 1
+  #命令
   command:
     default:
       #（★）HystrixCommand如何执行
@@ -56,22 +64,22 @@ hystrix:
           #（▲）信号量
           semaphore:
             #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
-            maxConcurrentRequests: 100
+            maxConcurrentRequests: 10000
       #（★）回退降级
       fallback:
-        enabled: true
-      #（★）断路器
-      circuitBreaker:
-        #是否开启熔断器，默认为true
-        enabled: true
-        #断路器将强制进入“打开”状态，它会拒绝所有请求
-        forceOpen: true
-        #
-        forceClosed: true
-        #当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 20
-        #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
-        #出错百分比阈值，当达到此阈值后，开始短路。默认50%
-        errorThresholdPercentage: 10
-        #熔断多久以后开始尝试是否恢复，默认5s
-        sleepWindowInMilliseconds: 5000
+        enabled: false
+#      #（★）断路器
+#      circuitBreaker:
+#        #是否开启熔断器，默认为true
+#        enabled: true
+#        #断路器将强制进入“打开”状态，它会拒绝所有请求
+#        forceOpen: true
+#        #
+#        forceClosed: true
+#        #当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 20
+#        #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
+#        #出错百分比阈值，当达到此阈值后，开始短路。默认50%
+#        errorThresholdPercentage: 10
+#        #熔断多久以后开始尝试是否恢复，默认5s
+#        sleepWindowInMilliseconds: 5000

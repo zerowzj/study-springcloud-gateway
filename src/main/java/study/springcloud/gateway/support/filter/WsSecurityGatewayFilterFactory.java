@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
-@Component
-@Order(-200)
+//@Component
+//@Order(-200)
 public class WsSecurityGatewayFilterFactory extends AbstractNameValueGatewayFilterFactory {
 
     @Override
