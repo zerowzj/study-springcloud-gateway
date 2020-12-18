@@ -26,10 +26,15 @@ spring:
         response-timeout: 5000
       #（★）全局过滤器
       default-filters:
+        #（▲）内置过滤器
 #        - AddResponseHeader=X-Response-Default-Name, Default-Value
-#        - AddRequestHeader=X-Request-Id, Value
-#        - AddRequestParameter=name, value
-#        - StripPrefix=1
+        #        - AddRequestHeader=X-Request-Id, Value
+        #        - AddRequestParameter=name, value
+        - StripPrefix=1
+        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，后面最好统一都是GatewayFilterFactory
+        - name: Custom
+          args:
+            type: root
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -39,5 +44,7 @@ spring:
           predicates:
             - Path=/springcloud-provider/**
           #局部过滤器
-          filters:
-            - StripPrefix=1
+#          filters:
+#            - name: Custom
+#              args:
+#                type: root
