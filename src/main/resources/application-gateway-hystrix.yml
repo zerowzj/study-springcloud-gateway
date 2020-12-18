@@ -25,8 +25,13 @@ hystrix:
   #
   threadpool:
     default:
+      #核心线程数
       coreSize: 10
+      #最大排队长度。默认-1，使用SynchronousQueue。
+      #其他值则使用 LinkedBlockingQueue。
+      #如果要从-1换成其他值则需重启，即该值不能动态调整，若要动态调整，需要使用到下边这个配置
       maxQueueSize: -1
+      #
       queueSizeRejectionThreshold: 1000
   #
   command:
@@ -63,9 +68,10 @@ hystrix:
         forceOpen: true
         #
         forceClosed: true
-        #窗口时间
-        sleepWindowInMilliseconds: 6000
-        #窗口时间内，断路器熔断的最小请求数
+        #当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
         requestVolumeThreshold: 20
         #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
+        #出错百分比阈值，当达到此阈值后，开始短路。默认50%
         errorThresholdPercentage: 10
+        #熔断多久以后开始尝试是否恢复，默认5s
+        sleepWindowInMilliseconds: 5000
