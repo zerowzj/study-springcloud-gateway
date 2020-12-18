@@ -13,7 +13,7 @@ spring:
           args:
             #指定了hystrix command的名称
             name: default
-            #
+            #降级url
             fallbackUri: forward:/defaultFallback
       routes:
         - id: study-springcloud-provider
@@ -22,14 +22,16 @@ spring:
             - Path=/springcloud-provider/**
           filters:
             - StripPrefix=1
-#
+# HystrixThreadPoolProperties
 hystrix:
-  #Hystrix命令所属线程池的配置
+  #Hystrix命令所属线程池配置
   threadpool:
     default:
-      #该参数用来设置执行命令线程池的核心线程数，该值也是命令执行的最大并发量
-      coreSize: 15
-      #最大排队长度。默认-1，使用SynchronousQueue。
+      #该参数用来设置执行命令线程池的核心线程数，该值也是命令执行的最大并发量，默认为10
+      coreSize: 1
+      #最大线程数
+      maximumSize: 1
+      #该参数用来设置线程池的最大队列大小。默认-1，使用SynchronousQueue。
       #其他值则使用 LinkedBlockingQueue。
       #如果要从-1换成其他值则需重启，即该值不能动态调整，若要动态调整，需要使用到下边这个配置
       maxQueueSize: -1
@@ -64,7 +66,7 @@ hystrix:
           #（▲）信号量
           semaphore:
             #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
-            maxConcurrentRequests: 10000
+            maxConcurrentRequests: 10
       #（★）回退降级
       fallback:
         enabled: false
