@@ -26,10 +26,10 @@ spring:
         response-timeout: 5000
       #（★）全局过滤器
       default-filters:
-        - AddResponseHeader=X-Response-Default-Name, Default-Value
-        - AddRequestHeader=X-Request-Id, Value
-        - AddRequestParameter=name, value
-        - StripPrefix=1
+#        - AddResponseHeader=X-Response-Default-Name, Default-Value
+#        - AddRequestHeader=X-Request-Id, Value
+#        - AddRequestParameter=name, value
+#        - StripPrefix=1
       #（★）路由
       routes:
         - id: study-springcloud-provider
