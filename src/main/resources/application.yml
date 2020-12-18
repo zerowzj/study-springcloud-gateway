@@ -12,7 +12,8 @@ spring:
     banner-mode: off
   profiles:
     active: gateway
-#    active: gateway, hystrix
+#    active: gateway-hystrix
+#    active: gateway-limiter
 #
 eureka:
   instance:

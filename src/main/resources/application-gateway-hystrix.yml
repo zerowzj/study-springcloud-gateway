@@ -1,40 +1,14 @@
 #
 spring:
-  redis:
-    host: 150.158.110.15
-    port: 7379
-    database: 0
   cloud:
-    #
     gateway:
-      #（★）
       enabled: true
-      #（★）注册发现
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-      #（★）http连接
-      httpclient:
-        pool:
-          #elastic/fixed/disabled
-          type: elastic
-          #fixed类型可用
-          max-connections: 5000
-          acquire-timeout: 5000
-          #最大空闲时间
-          max-idle-time: 1000
-          #最大生命周期
-          max-life-time: 1000
-        #连接和读取超时
-        connect-timeout: 5000
-        response-timeout: 5000
       #（★）全局过滤器
       default-filters:
-        - AddResponseHeader=X-Response-Default-Name, Default-Value
-        - AddRequestHeader=X-Request-Name, Value
-        - AddRequestParameter=name, value
-        - StripPrefix=1
         #HystrxGatewayFilterFactroy
         #        - name: Hystrix
         #          args:
@@ -43,26 +17,57 @@ spring:
       #（★）路由
       routes:
         - id: study-springcloud-provider
-          #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://study-springcloud-provider
           #路由条件
           predicates:
             - Path=/springcloud-provider/**
           #过滤器
           filters:
-            #uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
-            #默认按秒限流
-            #RequestRateLimiterGatewayFilterFactory, RedisRateLimiter
-            - name: RequestRateLimiter
-              args:
-                #使用SpEL按照名称引用Bean
-                key-resolver: '#{@uriKeyResolver}'
-                redis-rate-limiter:
-                  #每次补充令牌数量
-                  #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
-                  replenishRate: 5
-                  #令牌桶最大容量，突发请求数量
-                  #令牌桶最大容量，允许1秒内完成的最大请求数
-                  burstCapacity: 50
-                  #每次请求消耗令牌的数量
-                  requestedTokens: 1
+            - StripPrefix=1
+#
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maxQueueSize: -1
+      queueSizeRejectionThreshold: 1000
+  command:
+    default:
+      #（★）HystrixCommand如何去执行
+      execution:
+        #（▲）HystrixCommand.run()的执行是否启用超时时间
+        timeout:
+          enabled: false
+        #（▲）隔离
+        isolation:
+          #HystrixCommand.run()执行的隔离策略，THREAD/SEMAPHORE
+          strategy: SEMAPHORE
+          #（▲）线程
+          thread:
+            #HystrixCommand执行的超时时间
+            timeoutInMilliseconds: 3000
+            #当HystrixCommand.run()执行超时的时候是否要它中断
+            interruptOnTimeout: true
+            #当HystrixCommand.run()执行取消时是否要它中断
+            interruptOnCancel: true
+          #（▲）信号量
+          semaphore:
+            #信号量的大小，当最大并发请求达到该设置值时，后续的请求将被拒绝
+            maxConcurrentRequests: 100
+      #（★）回退降级
+      fallback:
+        enabled: true
+      #（★）熔断器
+#      circuitBreaker:
+#        #是否开启熔断器，默认为true
+#        enabled: true
+#        #断路器将强制进入“打开”状态，它会拒绝所有请求
+#        forceOpen: true
+#        #
+#        forceClosed: true
+#        #窗口时间内，断路器熔断的最小请求数
+#        requestVolumeThreshold: 20
+#        #
+#        sleepWindowInMilliseconds: 6000
+#        #窗口时间内，请求失败打开熔断器的百分比，默认是50，也就是超过50%的失败了才会打开
+#        errorThresholdPercentage: 10

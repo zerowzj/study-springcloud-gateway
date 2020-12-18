@@ -7,52 +7,19 @@ spring:
   cloud:
     #
     gateway:
-      #（★）
       enabled: true
-      #（★）注册发现
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-      #（★）http连接
-      httpclient:
-        pool:
-          #elastic/fixed/disabled
-          type: elastic
-          #fixed类型可用
-          max-connections: 5000
-          acquire-timeout: 5000
-          #最大空闲时间
-          max-idle-time: 1000
-          #最大生命周期
-          max-life-time: 1000
-        #连接和读取超时
-        connect-timeout: 5000
-        response-timeout: 5000
-      #（★）全局过滤器
-      default-filters:
-        - AddResponseHeader=X-Response-Default-Name, Default-Value
-        - AddRequestHeader=X-Request-Name, Value
-        - AddRequestParameter=name, value
-        - StripPrefix=1
-        #HystrxGatewayFilterFactroy
-        #        - name: Hystrix
-        #          args:
-        #            name: default
-        #fallbackUri: forward:/defaultFallback
-      #（★）路由
-      routes:
+       routes:
         - id: study-springcloud-provider
-          #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://study-springcloud-provider
-          #路由条件
           predicates:
             - Path=/springcloud-provider/**
-          #过滤器
           filters:
-            #uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
-            #默认按秒限流
-            #RequestRateLimiterGatewayFilterFactory, RedisRateLimiter
+            #（★）uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
+            #默认按秒限流；RequestRateLimiterGatewayFilterFactory, RedisRateLimiter
             - name: RequestRateLimiter
               args:
                 #使用SpEL按照名称引用Bean

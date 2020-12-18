@@ -1,13 +1,8 @@
 #
 spring:
-  redis:
-    host: 150.158.110.15
-    port: 7379
-    database: 0
   cloud:
-    #
     gateway:
-      #（★）
+      #（★）启用网关
       enabled: true
       #（★）注册发现
       discovery:
@@ -32,37 +27,17 @@ spring:
       #（★）全局过滤器
       default-filters:
         - AddResponseHeader=X-Response-Default-Name, Default-Value
-        - AddRequestHeader=X-Request-Name, Value
+        - AddRequestHeader=X-Request-Id, Value
         - AddRequestParameter=name, value
         - StripPrefix=1
-        #HystrxGatewayFilterFactroy
-        #        - name: Hystrix
-        #          args:
-        #            name: default
-        #fallbackUri: forward:/defaultFallback
       #（★）路由
       routes:
         - id: study-springcloud-provider
           #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://study-springcloud-provider
-          #路由条件
+          #断言
           predicates:
             - Path=/springcloud-provider/**
-          #过滤器
+          #局部过滤器
           filters:
-            #uri和predicates中path后的第一段路径不能设置成一样，否则限流不生效
-            #默认按秒限流
-            #RequestRateLimiterGatewayFilterFactory, RedisRateLimiter
-            - name: RequestRateLimiter
-              args:
-                #使用SpEL按照名称引用Bean
-                key-resolver: '#{@uriKeyResolver}'
-                redis-rate-limiter:
-                  #每次补充令牌数量
-                  #令牌桶每秒填充平均速率，允许用户每秒处理多少个请求
-                  replenishRate: 5
-                  #令牌桶最大容量，突发请求数量
-                  #令牌桶最大容量，允许1秒内完成的最大请求数
-                  burstCapacity: 50
-                  #每次请求消耗令牌的数量
-                  requestedTokens: 1
+            - StripPrefix=1
