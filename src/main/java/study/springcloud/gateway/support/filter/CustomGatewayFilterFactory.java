@@ -25,7 +25,7 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
 
     @Override
     public List<String> shortcutFieldOrder() {
-        return Arrays.asList("name");
+        return Arrays.asList("name11");
     }
 
     @Override
