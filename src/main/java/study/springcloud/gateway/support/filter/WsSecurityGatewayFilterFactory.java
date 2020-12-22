@@ -30,5 +30,4 @@ public class WsSecurityGatewayFilterFactory extends AbstractNameValueGatewayFilt
             }
         };
     }
-
 }

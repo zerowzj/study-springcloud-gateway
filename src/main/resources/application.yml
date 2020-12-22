@@ -26,3 +26,27 @@ spring:
     active: gateway
 #    active: gateway-hystrix
 #    active: gateway-limiter
+  cloud:
+    gateway:
+      #（★）启用网关
+      enabled: true
+      #（★）注册发现
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      #（★）http连接
+      httpclient:
+        pool:
+          #elastic/fixed/disabled
+          type: elastic
+          #fixed类型可用
+          max-connections: 5000
+          acquire-timeout: 5000
+          #最大空闲时间
+          max-idle-time: 1000
+          #最大生命周期
+          max-life-time: 1000
+        #连接和读取超时
+        connect-timeout: 5000
+        response-timeout: 5000

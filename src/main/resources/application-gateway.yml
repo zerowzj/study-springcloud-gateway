@@ -2,57 +2,27 @@
 spring:
   cloud:
     gateway:
-      #（★）启用网关
-      enabled: true
-      #（★）注册发现
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      #（★）http连接
-      httpclient:
-        pool:
-          #elastic/fixed/disabled
-          type: elastic
-          #fixed类型可用
-          max-connections: 5000
-          acquire-timeout: 5000
-          #最大空闲时间
-          max-idle-time: 1000
-          #最大生命周期
-          max-life-time: 1000
-        #连接和读取超时
-        connect-timeout: 5000
-        response-timeout: 5000
       #（★）全局过滤器
       default-filters:
         #（▲）内置过滤器
 #        - AddResponseHeader=X-Response-Default-Name, Default-Value
-        #        - AddRequestHeader=X-Request-Id, Value
-        #        - AddRequestParameter=name, value
+#        - AddRequestHeader=X-Request-Id, Value
+#        - AddRequestParameter=name, value
         - StripPrefix=1
-        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，后面最好统一都是GatewayFilterFactory
+        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，
+        #后面最好统一都是GatewayFilterFactory
         - name: Custom
           args:
             type: root
-        - name: WsSecurity
+#        - name: WsSecurity
       #（★）路由
       routes:
         - id: study-springcloud-provider
           #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
-          uri: lb://ti-
+          uri: lb://study-springcloud-provider
           #断言
           predicates:
-            - Path=/springcloud-provider/
-        - id: study-springcloud-provider
-          #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
-          uri: lb://ti-
-          #断言
-          predicates:
-            - Path=/admin-platform/ti1
-            - Path=/admin-platform/ti2
-            - Path=/admin-platform/ti3
-            - Path=/admin-platform/ti4
+            - Path=/springcloud-provider/**, /aaa/***, /bbb/***
           #局部过滤器
 #          filters:
 #            - name: Custom
