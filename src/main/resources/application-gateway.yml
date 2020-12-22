@@ -43,10 +43,7 @@ spring:
           uri: lb://ti-
           #断言
           predicates:
-            - Path=/admin-platform/ti1
-            - Path=/admin-platform/ti2
-            - Path=/admin-platform/ti3
-            - Path=/admin-platform/ti4
+            - Path=/springcloud-provider/
         - id: study-springcloud-provider
           #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://ti-
