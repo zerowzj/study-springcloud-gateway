@@ -16,7 +16,6 @@ spring:
           args:
             name: root
             age: 30
-#        - name: WsSecurity
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -26,6 +25,17 @@ spring:
           predicates:
             - Path=/springcloud-provider/**, /aaa/***, /bbb/***
           #局部过滤器
+        #          filters:
+        #            - name: Custom
+        #              args:
+        #                type: root
+        - id: study-springcloud-consumer-feign
+            #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
+            uri: lb://study-springcloud-consumer-feign
+            #断言
+            predicates:
+              - Path=/springcloud-consumer-feign/**
+            #局部过滤器
 #          filters:
 #            - name: Custom
 #              args:
