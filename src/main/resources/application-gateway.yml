@@ -13,7 +13,8 @@ spring:
         #后面最好统一都是GatewayFilterFactory
         - name: Custom
           args:
-            type: root
+            name: root
+            age: 30
 #        - name: WsSecurity
       #（★）路由
       routes:

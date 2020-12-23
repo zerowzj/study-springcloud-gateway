@@ -27,13 +27,16 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
 
     @Override
     public List<String> shortcutFieldOrder() {
-        return Arrays.asList("name11");
+        return Arrays.asList("name", "age");
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
-            boolean root = "root".equals(config.getType());
+            String name = config.getName();
+            int age = config.getAge();
+            log.info("name={}, age={}", name, age);
+            boolean root = "root".equals(config.getName());
             if (root) {
                 log.info("GatewayFilter root");
             } else {
@@ -52,7 +55,9 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
     @Getter
     public static class Config {
 
-        private String type;
+        private String name;
+
+        private int age;
 
     }
 }
