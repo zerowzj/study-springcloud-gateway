@@ -12,10 +12,6 @@ spring:
         #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，
         #后面最好统一都是GatewayFilterFactory
         - name: WatchDog
-        - name: Custom
-          args:
-            name: root
-            age: 30
       #（★）路由
       routes:
         - id: study-springcloud-provider
@@ -24,19 +20,13 @@ spring:
           #断言
           predicates:
             - Path=/springcloud-provider/**, /aaa/***, /bbb/***
-          #局部过滤器
-        #          filters:
-        #            - name: Custom
-        #              args:
-        #                type: root
-        - id: study-springcloud-consumer-feign
-            #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
-            uri: lb://study-springcloud-consumer-feign
-            #断言
-            predicates:
-              - Path=/springcloud-consumer-feign/**
             #局部过滤器
-#          filters:
-#            - name: Custom
-#              args:
-#                type: root
+          filters:
+            - name: Custom
+              args:
+                name: root
+                age: 30
+        - id: study-springcloud-consumer-feign
+          uri: lb://study-springcloud-consumer-feign
+          predicates:
+            - Path=/springcloud-consumer-feign/**

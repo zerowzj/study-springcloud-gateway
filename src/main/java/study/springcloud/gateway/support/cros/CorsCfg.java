@@ -22,7 +22,7 @@ public class CorsCfg {
 
     private static final String MAX_AGE = "";
 
-    @Bean
+//    @Bean
     public WebFilter corsFilter() {
         return (ServerWebExchange ctx, WebFilterChain chain) -> {
             ServerHttpRequest request = ctx.getRequest();
