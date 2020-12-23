@@ -6,7 +6,8 @@ import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.net.URI;
-import java.util.LinkedHashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Slf4j
 public class Exchanges {
@@ -29,9 +30,15 @@ public class Exchanges {
      * 获取原始路由url
      */
     public static URI getGatewayOriginalRouteUrl(ServerWebExchange exchange) {
-        LinkedHashSet set = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
-        log.info("{}", set);
-        return null;
+        Set<URI> uriSet = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+        log.info("{}", uriSet);
+        URI uri = null;
+        Iterator<URI> it = uriSet.iterator();
+        while (it.hasNext()) {
+            uri = it.next();
+            break;
+        }
+        return uri;
     }
 
     /**

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-@Order(-100)
+@Order(-1000)
 public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
     public WatchDogGatewayFilterFactory(){
@@ -32,8 +32,9 @@ public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<W
 
     @Override
     public GatewayFilter apply(Config config) {
-        log.info(">>>>>> ");
         return ((exchange, chain) -> {
+            String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
+            log.info(">>>>>> {}", path);
             Stopwatch stopwatch = Stopwatch.createStarted();
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 log.info(">>>>>> [{}] cost time [{}] ms", Exchanges.getGatewayRequestUrl(exchange), stopwatch.elapsed(TimeUnit.MILLISECONDS));
