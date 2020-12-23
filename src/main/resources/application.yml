@@ -26,6 +26,7 @@ spring:
     active: gateway
 #    active: gateway-hystrix
 #    active: gateway-limiter
+  #
   cloud:
     gateway:
       #（★）启用网关
