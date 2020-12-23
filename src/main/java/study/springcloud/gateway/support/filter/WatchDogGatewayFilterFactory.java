@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-@Order(-1)
 public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
     public WatchDogGatewayFilterFactory() {

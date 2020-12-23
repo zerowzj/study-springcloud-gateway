@@ -17,7 +17,6 @@ import java.util.List;
 
 @Slf4j
 @Component
-@Order(-1000)
 public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<CustomGatewayFilterFactory.Config> {
 
     public CustomGatewayFilterFactory(){
@@ -35,11 +34,14 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
         return new CustomGatewayFilter(config);
     }
 
+    /**
+     * （★）网关过滤器 GatewayFilter
+     */
     public class CustomGatewayFilter implements GatewayFilter, Ordered {
 
         private Config config;
 
-        public CustomGatewayFilter(Config config){
+        public CustomGatewayFilter(Config config) {
             this.config = config;
         }
 
@@ -61,6 +63,9 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
         }
     }
 
+    /**
+     * （★）配置类 Config
+     */
     @Setter
     @Getter
     public static class Config {

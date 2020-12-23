@@ -51,3 +51,4 @@ spring:
         #连接和读取超时
         connect-timeout: 5000
         response-timeout: 5000
+      re
