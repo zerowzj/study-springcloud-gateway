@@ -2,7 +2,7 @@
 spring:
   cloud:
     gateway:
-      #（★）全局过滤器
+      #（★）过滤器（全局）
       default-filters:
         #（▲）内置过滤器
 #        - AddResponseHeader=X-Response-Default-Name, Default-Value
@@ -20,7 +20,7 @@ spring:
           #断言
           predicates:
             - Path=/springcloud-provider/**, /aaa/***, /bbb/***
-            #局部过滤器
+            #（▲）过滤器（局部）
           filters:
             - name: Custom
               args:
