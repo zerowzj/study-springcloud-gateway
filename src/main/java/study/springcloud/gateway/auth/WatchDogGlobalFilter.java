@@ -13,8 +13,8 @@ import study.springcloud.gateway.support.utils.Exchanges;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Component
-@Order(-1000)
+//@Component
+//@Order(-1000)
 public class WatchDogGlobalFilter implements GlobalFilter {
 
     @Override

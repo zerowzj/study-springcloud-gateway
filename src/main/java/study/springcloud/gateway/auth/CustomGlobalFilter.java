@@ -14,8 +14,8 @@ import study.springcloud.gateway.support.utils.Exchanges;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Component
-@Order(-1)
+//@Component
+//@Order(-1)
 public class CustomGlobalFilter implements GlobalFilter {
 
     @Override

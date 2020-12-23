@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-@Order(-1)
+@Order(-1000)
 public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<CustomGatewayFilterFactory.Config> {
 
     public CustomGatewayFilterFactory(){
@@ -51,12 +51,13 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
             //在then方法里的，相当于aop中的后置通知
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 //do something
+                log.info("name={}, age={}", name, age);
             }));
         }
 
         @Override
         public int getOrder() {
-            return 0;
+            return 100;
         }
     }
 
