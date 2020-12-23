@@ -18,35 +18,25 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @Order(-100)
-public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<CustomGatewayFilterFactory.Config> {
+public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
-    public CustomGatewayFilterFactory(){
+    public WatchDogGatewayFilterFactory(){
         //这里需要将自定义的 Config 传过去，否则会报告ClassCastException
         super(Config.class);
     }
 
-    @Override
-    public List<String> shortcutFieldOrder() {
-        return Arrays.asList("name", "age");
-    }
+//    @Override
+//    public List<String> shortcutFieldOrder() {
+//        return Arrays.asList("name", "age");
+//    }
 
     @Override
     public GatewayFilter apply(Config config) {
+        log.info(">>>>>> ");
         return ((exchange, chain) -> {
-            String name = config.getName();
-            int age = config.getAge();
-            log.info("name={}, age={}", name, age);
-            boolean root = "root".equals(config.getName());
-            if (root) {
-                log.info("GatewayFilter root");
-            } else {
-                log.info("GatewayFilter customer");
-            }
-            //在then方法里的，相当于aop中的后置通知
             Stopwatch stopwatch = Stopwatch.createStarted();
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                //do something
-                log.info("[{}] cost time [{}] ms");
+                log.info(">>>>>> [{}] cost time [{}] ms", Exchanges.getGatewayRequestUrl(exchange), stopwatch.elapsed(TimeUnit.MILLISECONDS));
             }));
         });
     }
@@ -54,10 +44,6 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
     @Setter
     @Getter
     public static class Config {
-
-        private String name;
-
-        private int age;
 
     }
 }

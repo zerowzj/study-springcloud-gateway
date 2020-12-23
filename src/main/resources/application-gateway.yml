@@ -11,6 +11,7 @@ spring:
         - StripPrefix=1
         #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，
         #后面最好统一都是GatewayFilterFactory
+        - name: WatchDog
         - name: Custom
           args:
             name: root
