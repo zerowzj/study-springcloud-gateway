@@ -12,5 +12,4 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
                                 ErrorProperties errorProperties, ApplicationContext applicationContext) {
         super(errorAttributes, resourceProperties, errorProperties, applicationContext);
     }
-
 }
