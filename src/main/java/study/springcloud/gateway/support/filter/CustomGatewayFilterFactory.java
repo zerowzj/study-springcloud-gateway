@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
@@ -29,7 +32,19 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
 
     @Override
     public GatewayFilter apply(Config config) {
-        return ((exchange, chain) -> {
+        return new CustomGatewayFilter(config);
+    }
+
+    public class CustomGatewayFilter implements GatewayFilter, Ordered {
+
+        private Config config;
+
+        public CustomGatewayFilter(Config config){
+            this.config = config;
+        }
+
+        @Override
+        public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             String name = config.getName();
             int age = config.getAge();
             log.info("name={}, age={}", name, age);
@@ -37,7 +52,12 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 //do something
             }));
-        });
+        }
+
+        @Override
+        public int getOrder() {
+            return 0;
+        }
     }
 
     @Setter
