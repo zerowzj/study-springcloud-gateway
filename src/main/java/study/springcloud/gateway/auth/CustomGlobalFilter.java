@@ -20,13 +20,12 @@ public class CustomGlobalFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info(">>>>>>");
+        log.info(">>>>>> CustomGlobalFilter");
 
         String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
         Stopwatch stopwatch = Stopwatch.createStarted();
         Mono<Void> mono = chain.filter(exchange)
                 .then(Mono.fromRunnable(() -> {
-                    log.info(">>>>>> [{}] cost time [{}] ms", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
                 }));
         return mono;
     }

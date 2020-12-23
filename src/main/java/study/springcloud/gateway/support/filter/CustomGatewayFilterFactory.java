@@ -33,16 +33,9 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
             String name = config.getName();
             int age = config.getAge();
             log.info("name={}, age={}", name, age);
-            boolean root = "root".equals(config.getName());
-            if (root) {
-                log.info("GatewayFilter root");
-            } else {
-                log.info("GatewayFilter customer");
-            }
             //在then方法里的，相当于aop中的后置通知
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 //do something
-                log.info("[{}] cost time [{}] ms");
             }));
         });
     }

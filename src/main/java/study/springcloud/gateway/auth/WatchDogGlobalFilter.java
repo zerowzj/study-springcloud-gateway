@@ -19,7 +19,6 @@ public class WatchDogGlobalFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
         Stopwatch stopwatch = Stopwatch.createStarted();
         Mono<Void> mono = chain.filter(exchange)
