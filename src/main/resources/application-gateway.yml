@@ -9,9 +9,14 @@ spring:
 #        - AddRequestHeader=X-Request-Id, Value
 #        - AddRequestParameter=name, value
         - StripPrefix=1
-        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，
-        #后面最好统一都是GatewayFilterFactory
+        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，后面最好统一都是GatewayFilterFactory
         - name: WatchDog
+        - name: Auth
+          args:
+            ignoreLt:
+              - asdsfa
+              - asdfasd
+              - adsfasdf
       #（★）路由
       routes:
         - id: study-springcloud-provider

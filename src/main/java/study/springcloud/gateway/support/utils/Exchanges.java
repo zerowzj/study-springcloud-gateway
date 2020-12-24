@@ -31,6 +31,9 @@ public class Exchanges {
      */
     public static URI getGatewayOriginalRouteUrl(ServerWebExchange exchange) {
         Set<URI> uriSet = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+        if (uriSet == null) {
+            return URI.create("/");
+        }
         URI uri = null;
         Iterator<URI> it = uriSet.iterator();
         while (it.hasNext()) {

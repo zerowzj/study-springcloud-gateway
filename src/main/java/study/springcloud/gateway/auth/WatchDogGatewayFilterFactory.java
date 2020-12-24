@@ -1,4 +1,4 @@
-package study.springcloud.gateway.support.filter;
+package study.springcloud.gateway.auth;
 
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -35,7 +34,7 @@ public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<W
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
-            log.info(">>>>>> {}", path);
+            log.info(">>>>>> [{}]", path);
             Stopwatch stopwatch = Stopwatch.createStarted();
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 log.info(">>>>>> [{}] cost time [{}] ms", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
@@ -44,7 +43,7 @@ public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<W
 
         @Override
         public int getOrder() {
-            return 200;
+            return -100;
         }
     }
 
