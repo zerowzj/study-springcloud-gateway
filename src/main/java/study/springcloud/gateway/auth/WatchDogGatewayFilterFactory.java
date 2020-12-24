@@ -16,6 +16,12 @@ import study.springcloud.gateway.support.utils.Exchanges;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 1.全局过滤器与其他2类过滤器相比，永远是最后执行的；它的优先级只对其他全局过滤器起作用
+ * 2.当默认过滤器与自定义过滤器的优先级一样时，优先出发默认过滤器，然后才是自定义过滤器；
+ * 同类型的过滤器，出发顺序与他们在配置文件中声明的顺序一致
+ * 3.默认过滤器与自定义过滤器使用同样的order顺序空间，即他们会按照各自的顺序来进行排序
+ */
 @Slf4j
 @Component
 @Order(1000)
