@@ -2,11 +2,6 @@
 spring:
   cloud:
     gateway:
-      enabled: true
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
       routes:
         - id: study-springcloud-provider
           uri: lb://study-springcloud-provider
@@ -17,9 +12,9 @@ spring:
             #（★）HystrixGatewayFilterFactory
             - name: Hystrix
                 args:
-                  #指定hystrix command的名称
+                  #指定Hystrix Command的名称
                   name: default
-                  #回退uri
+                  #回退URI
                   fallbackUri: forward:/defaultFallback
 # HystrixThreadPoolProperties
 hystrix:
