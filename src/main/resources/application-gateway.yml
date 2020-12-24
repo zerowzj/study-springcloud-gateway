@@ -20,7 +20,7 @@ spring:
           uri: lb://study-springcloud-provider
           #断言
           predicates:
-            - Path=/springcloud-provider/**, /aaa/***, /bbb/***
+            - Path=/springcloud-provider/**,/aaa/**,/bbb/**
             #（▲）过滤器（局部）
           filters:
             - name: Custom
@@ -28,12 +28,12 @@ spring:
                 name: root
                 age: 30
         #服务
-        - id: study-springcloud-consumer-feign
-          uri: lb://study-springcloud-consumer-feign
-          predicates:
-            - Path=/springcloud-consumer-feign/**
-        #服务
         - id: study-springcloud-consumer-rest
           uri: lb://study-springcloud-consumer-rest
           predicates:
-            - Path=/springcloud-consumer-rest/**
+            - Path=/springcloud-consumer-rest/**,/ccc/**
+        #服务
+        - id: study-springcloud-consumer-feign
+          uri: lb://study-springcloud-consumer-feign
+          predicates:
+            - Path=/springcloud-consumer-feign/**,/ccc/**
