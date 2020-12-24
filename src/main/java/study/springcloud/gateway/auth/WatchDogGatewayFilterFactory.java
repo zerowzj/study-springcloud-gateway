@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
     public WatchDogGatewayFilterFactory() {
-        //这里需要将自定义的 Config 传过去，否则会报告ClassCastException
         super(Config.class);
     }
 

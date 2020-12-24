@@ -20,7 +20,6 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
     private List<String> ignoreLt;
 
     public AuthGatewayFilterFactory() {
-        //这里需要将自定义的 Config 传过去，否则会报告ClassCastException
         super(Config.class);
     }
 
@@ -40,9 +39,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             log.info(">>>>>> {}", ignoreLt);
-            //在then方法里的，相当于aop中的后置通知
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                //do something
             }));
         }
 
