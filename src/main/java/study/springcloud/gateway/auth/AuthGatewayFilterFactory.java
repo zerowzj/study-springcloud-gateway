@@ -40,6 +40,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             log.info(">>>>>> {}", ignoreLt);
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+                log.info(">>>>>> {}", ignoreLt);
              }));
         }
 
