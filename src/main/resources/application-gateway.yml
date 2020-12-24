@@ -14,6 +14,7 @@ spring:
         - name: Auth
       #（★）路由
       routes:
+        #服务
         - id: study-springcloud-provider
           #目标服务地址，lb代表从注册中心获取服务，且以负载均衡方式转发
           uri: lb://study-springcloud-provider
@@ -26,7 +27,13 @@ spring:
               args:
                 name: root
                 age: 30
+        #服务
         - id: study-springcloud-consumer-feign
           uri: lb://study-springcloud-consumer-feign
           predicates:
             - Path=/springcloud-consumer-feign/**
+        #服务
+        - id: study-springcloud-consumer-rest
+          uri: lb://study-springcloud-consumer-rest
+          predicates:
+            - Path=/springcloud-consumer-rest/**
