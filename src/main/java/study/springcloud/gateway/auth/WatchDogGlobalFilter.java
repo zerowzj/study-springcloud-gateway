@@ -13,17 +13,18 @@ import study.springcloud.gateway.support.utils.Exchanges;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-//@Component
-//@Order(-1000)
+@Component
+@Order(-100000)
 public class WatchDogGlobalFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
+        log.info("sssssssssssssssss");
         Stopwatch stopwatch = Stopwatch.createStarted();
         Mono<Void> mono = chain.filter(exchange)
                 .then(Mono.fromRunnable(() -> {
-                    log.info(">>>>>> [{}] cost time [{}] ms", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+                    log.info("sssssssssssssssssss", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
                 }));
         return mono;
     }
