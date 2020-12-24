@@ -17,26 +17,28 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-public class WatchDogGatewayFilter extends AbstractGatewayFilterFactory<WatchDogGatewayFilter.Config> {
+public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
-    public WatchDogGatewayFilter() {
+    public WatchDogGatewayFilterFactory() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        return new MyGatewayFilter();
+        return new WatchDogGatewayFilter();
     }
 
-    public class MyGatewayFilter implements GatewayFilter, Ordered {
+    public class WatchDogGatewayFilter implements GatewayFilter, Ordered {
 
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+            //
             String path = Exchanges.getGatewayOriginalRouteUrl(exchange).getPath();
-            log.info(">>>>>> [{}]", path);
+            log.info("pre >>>>>> [{}]", path);
+            //
             Stopwatch stopwatch = Stopwatch.createStarted();
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                log.info(">>>>>> [{}] cost time [{}] ms", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+                log.info("post >>>>>> [{}] cost time [{}] ms", path, stopwatch.elapsed(TimeUnit.MILLISECONDS));
             }));
         }
 

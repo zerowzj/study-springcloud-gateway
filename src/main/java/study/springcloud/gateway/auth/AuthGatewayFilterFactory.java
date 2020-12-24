@@ -15,30 +15,31 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayFilter.Config> {
+public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.Config> {
 
     private List<String> ignoreLt;
 
-    public AuthGatewayFilter() {
+    public AuthGatewayFilterFactory() {
         super(Config.class);
     }
 
     @Override
-    public GatewayFilter apply(Config config) {
-        return new MyGatewayFilter(config);
+    public AuthGatewayFilter apply(Config config) {
+        return new AuthGatewayFilter(config);
     }
 
-    public class MyGatewayFilter implements GatewayFilter, Ordered {
+    public class AuthGatewayFilter implements GatewayFilter, Ordered {
 
         private Config config;
 
-        public MyGatewayFilter(Config config) {
+        public AuthGatewayFilter(Config config) {
             this.config = config;
         }
 
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             log.info(">>>>>> ignore_list={}", ignoreLt);
+
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 log.info(">>>>>> ignore_list={}", ignoreLt);
              }));
