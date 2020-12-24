@@ -15,24 +15,24 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.Config> {
+public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayFilter.Config> {
 
     private List<String> ignoreLt;
 
-    public AuthGatewayFilterFactory() {
+    public AuthGatewayFilter() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        return new AuthGatewayFilter(config);
+        return new MyGatewayFilter(config);
     }
 
-    public class AuthGatewayFilter implements GatewayFilter, Ordered {
+    public class MyGatewayFilter implements GatewayFilter, Ordered {
 
         private Config config;
 
-        public AuthGatewayFilter(Config config) {
+        public MyGatewayFilter(Config config) {
             this.config = config;
         }
 

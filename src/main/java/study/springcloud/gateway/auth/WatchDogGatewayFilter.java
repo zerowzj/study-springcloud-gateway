@@ -17,18 +17,18 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
-public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
+public class WatchDogGatewayFilter extends AbstractGatewayFilterFactory<WatchDogGatewayFilter.Config> {
 
-    public WatchDogGatewayFilterFactory() {
+    public WatchDogGatewayFilter() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        return new WatchDogGatewayFilter();
+        return new MyGatewayFilter();
     }
 
-    public class WatchDogGatewayFilter implements GatewayFilter, Ordered {
+    public class MyGatewayFilter implements GatewayFilter, Ordered {
 
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
