@@ -5,10 +5,22 @@ spring:
       #（★）过滤器（全局）
       default-filters:
         #（▲）内置过滤器
-#        - AddResponseHeader=X-Response-Default-Name, Default-Value
-#        - AddRequestHeader=X-Request-Id, Value
-#        - AddRequestParameter=name, value
+        #        - AddRequestHeader=X-Request-Id, Value
+        #        - AddRequestParameter=name, value
+        #        - AddResponseHeader=X-Response-Default-Name, Default-Value
         - StripPrefix=1
+        - name: Retry
+          args:
+            retries: 3
+            statuses:
+              - OK
+            series:
+              - SERVER_ERROR
+            methods:
+              - GET
+              - POST
+            exceptions:
+              - java.io.IOException
         #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，后面最好统一都是GatewayFilterFactory
         - name: WatchDog
         - name: Auth
