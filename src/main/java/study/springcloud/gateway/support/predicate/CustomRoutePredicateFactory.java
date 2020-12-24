@@ -1,5 +1,7 @@
 package study.springcloud.gateway.support.predicate;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.handler.predicate.AbstractRoutePredicateFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,40 +14,32 @@ import java.util.function.Predicate;
 @Slf4j
 public class CustomRoutePredicateFactory extends AbstractRoutePredicateFactory<CustomRoutePredicateFactory.Config> {
 
-    private static final String DATETIME_KEY = "headerName";
-
     public CustomRoutePredicateFactory() {
         super(Config.class);
     }
 
     @Override
     public List<String> shortcutFieldOrder() {
-        return Collections.singletonList(DATETIME_KEY);
+        return Collections.singletonList("name");
     }
 
     @Override
     public Predicate<ServerWebExchange> apply(Config config) {
-        log.debug("TokenRoutePredicateFactory Start...");
+        log.info("");
         return exchange -> {
             //判断header里有放token
             HttpHeaders headers = exchange.getRequest().getHeaders();
-            List<String> header = headers.get(config.getHeaderName());
+            List<String> header = headers.get(config.getName());
             log.info("Token Predicate headers:{}", header);
             return header.size() > 0;
         };
     }
 
+    @Setter
+    @Getter
+    public class Config {
 
-    public static class Config {
+        private String name;
 
-        private String headerName;
-
-        public String getHeaderName() {
-            return headerName;
-        }
-
-        public void setHeaderName(String headerName) {
-            this.headerName = headerName;
-        }
     }
 }
