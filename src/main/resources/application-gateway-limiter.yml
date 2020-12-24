@@ -1,17 +1,13 @@
 #
 spring:
-  #（★）Redis
+  #
   redis:
     host: 150.158.110.15
     port: 7379
     database: 0
+  #
   cloud:
     gateway:
-      enabled: true
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
        routes:
         - id: study-springcloud-provider
           uri: lb://study-springcloud-provider
