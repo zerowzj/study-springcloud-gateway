@@ -9,13 +9,14 @@ spring:
         #        - AddRequestParameter=name, value
         #        - AddResponseHeader=X-Response-Default-Name, Default-Value
         - StripPrefix=1
+        #重试
         - name: Retry
           args:
             retries: 3
-            statuses:
-              - OK
             series:
               - SERVER_ERROR
+            statuses:
+              - OK
             methods:
               - GET
               - POST
@@ -40,12 +41,12 @@ spring:
                 name: root
                 age: 30
         #服务
-        - id: study-springcloud-consumer-rest
-          uri: lb://study-springcloud-consumer-rest
-          predicates:
-            - Path=/springcloud-consumer-rest/**,/ccc/**
-        #服务
         - id: study-springcloud-consumer-feign
           uri: lb://study-springcloud-consumer-feign
           predicates:
             - Path=/springcloud-consumer-feign/**,/ccc/**
+        #服务
+        - id: study-springcloud-consumer-rest
+          uri: lb://study-springcloud-consumer-rest
+          predicates:
+            - Path=/springcloud-consumer-rest/**,/ccc/**
