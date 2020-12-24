@@ -17,6 +17,8 @@ import java.util.List;
 @Component
 public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.Config> {
 
+    private static final int ORDER = -900;
+
     private List<String> ignoreLt;
 
     public AuthGatewayFilterFactory() {
@@ -47,7 +49,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
 
         @Override
         public int getOrder() {
-            return 100;
+            return ORDER;
         }
     }
 

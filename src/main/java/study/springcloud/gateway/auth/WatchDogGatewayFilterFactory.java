@@ -19,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<WatchDogGatewayFilterFactory.Config> {
 
+    private static final int ORDER = -1000;
+
     public WatchDogGatewayFilterFactory() {
         super(Config.class);
     }
@@ -44,7 +46,7 @@ public class WatchDogGatewayFilterFactory extends AbstractGatewayFilterFactory<W
 
         @Override
         public int getOrder() {
-            return -100;
+            return ORDER;
         }
     }
 
