@@ -15,7 +15,7 @@ spring:
           args:
             retries: 3
             series: SERVER_ERROR
-            methods: GET, POST
+            methods: GET, POST、
             exceptions: java.io.IOException
         #（▲）自定义过滤器，SpringBoot约定自定义过滤器前缀为配置的name，后缀统一都是GatewayFilterFactory
         - name: WatchDog
