@@ -3,7 +3,6 @@ spring:
   cloud:
     gateway:
       #（★）过滤器（全局）
-      #1.
       default-filters:
         #（▲）内置过滤器
         #        - AddRequestHeader=X-Request-Id, Value
@@ -18,7 +17,7 @@ spring:
             series: SERVER_ERROR
             methods: GET, POST
             exceptions: java.io.IOException
-        #（▲）自定义过滤器，springboot 约定自定义过滤器前缀为配置的name，后面最好统一都是GatewayFilterFactory
+        #（▲）自定义过滤器，SpringBoot约定自定义过滤器前缀为配置的name，后缀统一都是GatewayFilterFactory
         - name: WatchDog
         - name: Auth
       #（★）路由
@@ -29,7 +28,7 @@ spring:
           uri: lb://study-springcloud-provider
           #断言
           predicates:
-            - Path=/springcloud-provider/**,/aaa/**,/bbb/**
+            - Path=/springcloud-provider/**, /aaa/**, /bbb/**
             #（▲）过滤器（局部）
           filters:
             - name: Custom
@@ -40,9 +39,9 @@ spring:
         - id: study-springcloud-consumer-feign
           uri: lb://study-springcloud-consumer-feign
           predicates:
-            - Path=/springcloud-consumer-feign/**,/ccc/**
+            - Path=/springcloud-consumer-feign/**, /ccc/**
         #服务
         - id: study-springcloud-consumer-rest
           uri: lb://study-springcloud-consumer-rest
           predicates:
-            - Path=/springcloud-consumer-rest/**,/ccc/**
+            - Path=/springcloud-consumer-rest/**, /ccc/**
